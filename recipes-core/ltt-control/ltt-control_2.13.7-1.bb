@@ -30,7 +30,7 @@ S = "${WORKDIR}/${BPN}-debian-${PV}"
 #       (this is based on recipes that have previously been built and packaged)
 # NOTE: the following library dependencies are unknown, ignoring: pfm kmod rt c dl
 #       (this is based on recipes that have previously been built and packaged)
-DEPENDS = "flex-native swig-native bison-native"
+DEPENDS = "flex-native swig-native bison-native popt liburcu lttng-ust libxml2"
 
 # NOTE: if this software is not capable of being built in a separate build directory
 # from the source, you should replace autotools with autotools-brokensep in the
@@ -38,5 +38,11 @@ DEPENDS = "flex-native swig-native bison-native"
 inherit pkgconfig python3native autotools
 
 # Specify any options you want to pass to the configure script using EXTRA_OECONF:
-EXTRA_OECONF = ""
+EXTRA_OECONF = "--enable-python-bindings --disable-man-pages"
+
+FILES:${PN}-dev += "\
+  ${datadir}/xml/lttng/session.xsd \
+  ${libdir}/lttng/libexec/lttng-consumerd \
+  ${libdir}/python3.10/site-packages \
+"
 
